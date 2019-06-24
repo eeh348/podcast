@@ -18,8 +18,27 @@ parsed_response = json.loads(response.text)
 print(response)
 print(my_cred)
 
+delivery = {
+    "sender": "Charlie",
+    "recipient": "Anika",
+    "price": 16.99,
+    "status": "in transit",
+    "stops": ["New York", "Denver", "San Fran"]
+}
+
+print("A delivery from " + delivery['sender'] + " to " + delivery['recipient'])
+
+stops = list(delivery['stops'])
+
+books = [
+    {"id": 1, "title": "title A", "color": "blue", "year": 1901},
+    {"id": 2, "title": "title B", "color": "black", "year": 1926}
+]
+
 breakpoint()
 
+for s in stops:
+    print(s)
 
 #price = response.json()
 
