@@ -4,6 +4,7 @@
 import os
 import requests
 import json
+import pprint
 #import unirest
 
 from dotenv import load_dotenv
@@ -11,34 +12,72 @@ from dotenv import load_dotenv
 #capture keys
 load_dotenv()
 my_cred = os.environ.get("X_LISTEN_API_KEY")
-request_url = "https://listen-api.listennotes.com/api/v2/search?q=star%20wars&sort_by_date=0&type=episode&offset=0&len_min=10&len_max=30&genre_ids=68%2C82&published_before=1390190241000&published_after=0&only_in=title%2Cdescription&language=English&safe_mode=1"
+
+list_string = []
+new_search = []
+
+#define functions
+def format_search(search):
+    list_string = search.split()
+    new_search = '%20'.join(list_string)
+    return new_search
+
+#if __name__ == '__main__': 
+
+#capture multiple inputs in a list until user types DONE; does not validate if it's a valid stock symbol
+#while True:
+    #ask user for stock symbol
+search = input("What topics are you looking to search: ") #fix spaces
+
+new_search = format_search(search)
+
+    #earch = symbol.upper()
+
+    #if search == "DONE":
+        #break
+    #elif symbol.isalpha() and len(symbol) < 6:
+        #symbol = symbol.upper()
+        #symbol_list.append(symbol.upper())
+    #else:
+        #print("Input must be A-Z characters only and less than or equal to 5 characters")
+
+#create user input
+
+request_url = f"https://listen-api.listennotes.com/api/v2/search?q={new_search}&sort_by_date=0&type=episode&offset=0&len_min=10&len_max=30&genre_ids=68%2C82&published_before=1390190241000&published_after=0&only_in=title%2Cdescription&language=English&safe_mode=1"
 response = requests.get(request_url, headers={"X-ListenAPI-Key": my_cred})
 parsed_response = json.loads(response.text)
 
-print(response)
-print(my_cred)
+results = parsed_response['results']
 
-delivery = {
-    "sender": "Charlie",
-    "recipient": "Anika",
-    "price": 16.99,
-    "status": "in transit",
-    "stops": ["New York", "Denver", "San Fran"]
-}
 
-print("A delivery from " + delivery['sender'] + " to " + delivery['recipient'])
 
-stops = list(delivery['stops'])
-
-books = [
-    {"id": 1, "title": "title A", "color": "blue", "year": 1901},
-    {"id": 2, "title": "title B", "color": "black", "year": 1926}
-]
+for record in results:
+    #results[record]['title_original']
+        #title = results[t]['title_original']
+        #title = title.append
+    pass
 
 breakpoint()
 
-for s in stops:
-    print(s)
+#print(response)
+#print(parsed_response)
+#print(my_cred)
+
+#capture multiple inputs in a list until user types DONE; does not validate if it's a valid stock symbol
+##while True:
+#    #ask user for stock symbol
+#    search = input("What topics are you looking to search")
+#    symbol = symbol.upper()
+#
+#    if symbol == "DONE":
+#        break
+#    elif symbol.isalpha() and len(symbol) < 6:
+#        #symbol = symbol.upper()
+#        symbol_list.append(symbol.upper())
+#    else:
+#        print("Input must be A-Z characters only and less than or equal to 5 characters")
+#
+#create user input
 
 #price = response.json()
 
