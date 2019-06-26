@@ -5,6 +5,7 @@ import os
 import requests
 import json
 import pprint
+from dotenv import load_dotenv
 #import unirest
 
 from dotenv import load_dotenv
@@ -24,7 +25,6 @@ def format_search(search):
 
 #if __name__ == '__main__': 
 
-#capture multiple inputs in a list until user types DONE; does not validate if it's a valid stock symbol
 #while True:
     #ask user for stock symbol
 search = input("What topics are you looking to search: ") #fix spaces
@@ -48,8 +48,6 @@ response = requests.get(request_url, headers={"X-ListenAPI-Key": my_cred})
 parsed_response = json.loads(response.text)
 
 results = parsed_response['results']
-
-
 
 for record in results:
     #results[record]['title_original']
