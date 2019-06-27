@@ -6,6 +6,7 @@ import requests
 import json
 import pprint
 from dotenv import load_dotenv
+import datetime
 #import unirest
 
 from dotenv import load_dotenv
@@ -22,6 +23,11 @@ def format_search(search):
     list_string = search.split()
     new_search = '%20'.join(list_string)
     return new_search
+
+def format_date(timestamnp):
+    new_timestamp = datetime.datetime.fromtimestamp(timestamp)
+    new_timestamp = new_timestamp.strftime('%b %d %Y %H:%M:%S')
+    return new_timestamp
 
 #if __name__ == '__main__': 
 
@@ -47,15 +53,35 @@ request_url = f"https://listen-api.listennotes.com/api/v2/search?q={new_search}&
 response = requests.get(request_url, headers={"X-ListenAPI-Key": my_cred})
 parsed_response = json.loads(response.text)
 
-results = parsed_response['results']
+results = []
 
-for record in results:
-    #results[record]['title_original']
-        #title = results[t]['title_original']
-        #title = title.append
-    pass
+results = list(parsed_response['results'])
 
-breakpoint()
+#print(results[0])
+
+if len(results) == 0:
+    print("Your search returned 0 results. Please try again")
+else:
+    print("You search returned " + str(parsed_response['count']) + " results")
+
+
+for r in results:
+    timestamp = r['pub_date_ms']
+    title = r['title_original']
+    podcast = r['podcast_title_original']
+
+    timestamp = timestamp/1000.0
+
+    #new_timestamp = format_date(timestamp)
+
+    print(f"DATE: {format_date(timestamp)}")
+    #breakpoint ()
+    print(f"TITLE: {title}")
+    print(f"DESCRIPTION {podcast}")
+
+    breakpoint()
+
+
 
 #print(response)
 #print(parsed_response)
