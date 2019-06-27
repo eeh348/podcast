@@ -62,7 +62,11 @@ results = list(parsed_response['results'])
 if len(results) == 0:
     print("Your search returned 0 results. Please try again")
 else:
-    print("You search returned " + str(parsed_response['count']) + " results")
+    if len(results) == 1:
+        print("You search returned " + str(parsed_response['count']) + " result")
+    else: 
+        print("You search returned " + str(parsed_response['count']) + " result")
+print("-------------------")
 
 
 for r in results:
@@ -75,11 +79,9 @@ for r in results:
     #new_timestamp = format_date(timestamp)
 
     print(f"DATE: {format_date(timestamp)}")
-    #breakpoint ()
     print(f"TITLE: {title}")
-    print(f"DESCRIPTION {podcast}")
-
-    breakpoint()
+    print(f"DESCRIPTION: {podcast}")
+    print("-------------------")
 
 
 
