@@ -33,23 +33,11 @@ conda create -n podcast-env python=3.7 # (first time only)
 conda activate podcast-env
 ```
 
-Install the following modules
+Install the the required modules defined in the rquiremetns.txt file
 
 ```sh
-requests
-datetime
-json
-csv
-os
-statistics
+pip install -r requirements.txt
 ```
-
-Install the following packages
-
-```sh
-from dotenv import load_dotenv
-```
-
 
 ## Setup
 
