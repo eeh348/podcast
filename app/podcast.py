@@ -10,11 +10,12 @@ import PySimpleGUI as sg
 
 from dotenv import load_dotenv
 
-#sg.Popup("Hello From PySimpleGUI!", "This is the shortest GUI program ever!")
-
 #capture keys
 list_string = []
 new_search = []
+
+#define fonts
+font = ('Veranda', 12)
 
 #define functions
 def format_search(search):
@@ -27,33 +28,42 @@ def format_date(timestamnp):
     new_timestamp = new_timestamp.strftime('%b %d %Y')
     return new_timestamp
 
+def format_dur(len):
+    new_len = round(len/60)
+    return new_len
+           
 #if __name__ == '__main__':
+
+#sg.Popup('This is my first Popup')
 
 load_dotenv()
 my_cred = os.environ.get("X_LISTEN_API_KEY")
 
-#build search GUI
-layout = [
-    [sg.Text("SEARCH"), sg.InputText()],
-    [sg.OK()]
-]
+#build search GUI - adapted from https://pysimplegui.readthedocs.io/en/latest/tutorial/#the-5-minute-gui
 
-window = sg.Window("Podcast Search Tool").Layout(layout)
+while True:
 
-button, values = window.Read()
+    layout = [      
+            [sg.Text('Please search on a podcast name, episdoe or topic')],      
+            [sg.Text('Search', size=(15, 1)), sg.InputText()],          
+            [sg.RButton("Search"), sg.Exit()]      
+            ]
 
-print(type(values)) #> dict
-print(values) #> {0: 'Polly Professor'}
-search = values[0] #> Polly Professor
-print("SEARCHING ON...:", search)
+    window = sg.Window('Search Podcasts', layout, font='Veranda')       
+    event, values = window.Read()
+    search = values[0]
 
-#ask user for input and make sure it's empty
-#search = input("What topics are you looking to search: ")
-
-if search == "":
-    search = input("Your input was blank. Please search a topic: ")
-else:
-    pass
+    #display processing message
+    if event is None or event == 'Exit':
+        break
+    elif search == "":
+        sg.Popup('Your input was blank. Please search a topic:')
+        window = sg.Window('Search Podcasts', layout)       
+        event, values = window.Read()
+    else:
+        window.Close()
+        sg.Popup(f'Searching on {search}... ', font='Veranda')
+        break
 
 #format user input  
 new_search = format_search(search)
@@ -67,50 +77,41 @@ results = []
 
 results = list(parsed_response['results'])
 
+#build output - adapted from https://pysimplegui.readthedocs.io/en/latest/#getting-started-with-pysimplegu
+
 #check to make sure results aren't blank
 if len(results) == 0:
-    print("Your search returned 0 results. Please try again")
+    result_msg = 'Your search returned 0 results. Please try again'
 else:
     if len(results) == 1:
-        print("You search returned " + str(parsed_response['count']) + " result")
+        result_msg = 'You search returned ' + str(parsed_response['count']) + ' result'
     else: 
-        print("You search returned " + str(parsed_response['count']) + " results")
-print("-------------------")
+        result_msg = 'You search returned ' + str(parsed_response['count']) + ' results'
+
+#sg.Window()
+
+#sort list on release date - adapted from https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-lambda-function/
+sorted_results = sorted(results, key = lambda i: i['pub_date_ms'],reverse=True)
+
+#create list of dictionaries for results
+podcast_results = []
 
 #print results
-for r in results:
+for r in sorted_results:
     timestamp = r['pub_date_ms']
     title = r['title_original']
     podcast = r['podcast_title_original']
+    audio = r['audio']
+    length = r['audio_length_sec']
+    thumbnail = r['thumbnail']
 
     timestamp = timestamp/1000.0
 
-#build GUI
-layout = [
-    [sg.Text("RESULTS"), sg.InputText()],
-    [sg.OK()]
-]
+    new_time = format_date(timestamp)
 
-window = sg.Window("Podcast Search Tool").Layout(layout)
-
-button, values = window.Read()
-
-print(type(values)) #> dict
-print(values) #> {0: 'Polly Professor'}
-search = values[0] #> Polly Professor
-print("SEARCHING ON...:", search)
-
-#print results
-for r in results:
-    timestamp = r['pub_date_ms']
-    title = r['title_original']
-    podcast = r['podcast_title_original']
-
-    timestamp = timestamp/1000.0
-
-    print(f"DATE: {format_date(timestamp)}")
-    print(f"TITLE: {title}")
-    print(f"DESCRIPTION: {podcast}")
+    print(f"PUB DATE: {format_date(timestamp)}")
+    print(f"PODCAST TITLE: {title}")
+    print(f"PODCAST NAME: {podcast}")
+    print(f"DURATION: {format_dur(length)} MINS")
     print("-------------------")
-
 
