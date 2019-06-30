@@ -1,0 +1,2 @@
+#version of python that podcast.py uses
+Python 3.7.3
