@@ -34,19 +34,16 @@ def format_dur(len):
            
 #if __name__ == '__main__':
 
-#sg.Popup('This is my first Popup')
-
 load_dotenv()
 my_cred = os.environ.get("X_LISTEN_API_KEY")
 
 #build search GUI - adapted from https://pysimplegui.readthedocs.io/en/latest/tutorial/#the-5-minute-gui
-
 while True:
 
     layout = [      
             [sg.Text('Please search on a podcast name, episdoe or topic')],      
             [sg.Text('Search', size=(15, 1)), sg.InputText()],          
-            [sg.RButton("Search"), sg.Exit()]      
+            [sg.Submit("Search"), sg.Exit()]      
             ]
 
     window = sg.Window('Search Podcasts', layout, font='Veranda')       
@@ -88,8 +85,6 @@ else:
     else: 
         result_msg = 'You search returned ' + str(parsed_response['count']) + ' results'
 
-#sg.Window()
-
 #sort list on release date - adapted from https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-lambda-function/
 sorted_results = sorted(results, key = lambda i: i['pub_date_ms'],reverse=True)
 
@@ -98,6 +93,7 @@ podcast_results = []
 
 #print results
 for r in sorted_results:
+
     timestamp = r['pub_date_ms']
     title = r['title_original']
     podcast = r['podcast_title_original']
