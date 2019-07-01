@@ -91,6 +91,8 @@ sorted_results = sorted(results, key = lambda i: i['pub_date_ms'],reverse=True)
 #create list of dictionaries for results
 podcast_results = []
 
+print(result_msg)
+
 #print results
 for r in sorted_results:
 
@@ -110,4 +112,3 @@ for r in sorted_results:
     print(f"PODCAST NAME: {podcast}")
     print(f"DURATION: {format_dur(length)} MINS")
     print("-------------------")
-

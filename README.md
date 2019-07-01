@@ -10,11 +10,17 @@ Tool to search podcasts
 
 ## Installation
 
-
 Fork this repository under your own control, then clone or download the resulting repository onto your computer. Then navigate there from the command line:
 
 ```sh
 cd ~podcast
+```
+
+Use Anaconda to create and activate a new virtual environment, called "podcast-env":
+
+```sh
+conda create -n podcast-env python=3.7 # (first time only)
+conda activate podcast-env
 ```
 
 > NOTE: subsequent usage and testing commands assume you are running them from the repository's root directory.
@@ -26,19 +32,22 @@ pip install -r requirements.txt
 pip install pytest
 ```
 
-Use Anaconda to create and activate a new virtual environment, perhaps called "podcast-env":
+## Listen API Key
+
+This application uses the Listen API to search podcasts based on a variety of inputs. To obtain a listen API, follow the steps below:
+
+1. Create an account on https://www.listennotes.com/api/
+2. Request the free version
+3. An API key will be sent to your email
+4. Create an .env file and add the API to as X_LISTEN_API_KEY = "abc123"
+
+## Run the app
+
+Launch the app via the terminal.
 
 ```sh
-conda create -n podcast-env python=3.7 # (first time only)
-conda activate podcast-env
+python app/podcast.py
 ```
 
-Install the the required modules defined in the rquiremetns.txt file
-
-```sh
-pip install -r requirements.txt
-```
-
-## Setup
-
+Input your search critera via the popup. Your results will be displayed in the terminal. Your results contains the top 10 results sorted by relevance and data.
 
