@@ -51,3 +51,13 @@ python app/podcast.py
 
 Input your search critera via the popup. Your results will be displayed in the terminal. Your results contains the top 10 results sorted by relevance and data.
 
+## TESTING
+Run tests:
+
+```sh
+pytest
+```
+
+## ATTESTATIONS
+1. GUI adapted from https://pysimplegui.readthedocs.io/en/latest/tutorial/#the-5-minute-gui
+2. Sort by date adapted from https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-lambda-function/
