@@ -49,15 +49,15 @@ Launch the app via the terminal.
 python app/podcast.py
 ```
 
-Input your search critera via the popup. Your results will be displayed in the terminal. Your results contains the top 10 results sorted by relevance and data.
+Input your search critera via the popup. Your results will be displayed in the terminal. Your results contains the top 10 results sorted by relevance and date.
 
-## TESTING
+## Testing
 Run tests:
 
 ```sh
 pytest python test/podcast_test.py
 ```
 
-## ATTESTATIONS
+## Attestations
 1. GUI adapted from https://pysimplegui.readthedocs.io/en/latest/tutorial/#the-5-minute-gui
 2. Sort by date adapted from https://www.geeksforgeeks.org/ways-sort-list-dictionaries-values-python-using-lambda-function/
