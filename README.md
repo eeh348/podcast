@@ -55,7 +55,7 @@ Input your search critera via the popup. Your results will be displayed in the t
 Run tests:
 
 ```sh
-pytest
+pytest python test/podcast_test.py
 ```
 
 ## ATTESTATIONS
